@@ -1,0 +1,12 @@
+ansible_python_interpreter: /usr/bin/python3
+new_root_password: Anthony80!
+root_password: Anthony80!
+your_database_name: nextcloud
+database_name: lotr
+service_file: /root/terraform/files/lotr.service
+local_env_file: /root/terraform/files/app.env
+env_file: /home/ubuntu/lotr/app.env
+js_directory: /home/ubuntu/lotr
+local_lotr_file: /root/terraform/files/lotr.sql
+remote_lotr_directory: /home/ubuntu
+remote_lotr_file: /home/ubuntu/lotr.sql

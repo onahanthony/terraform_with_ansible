@@ -1,0 +1,68 @@
+- name: Install MariaDB server
+  ansible.builtin.apt:
+    name: mysql-server
+    state: present
+
+- name: Start and enable MariaDB service
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: yes
+- name: Install pip
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install PyMySQL
+  pip:
+    name: pymysql
+    state: present
+- name: Install MariaDB client
+  ansible.builtin.apt:
+    name: mysql-client
+    state: present
+- name: Secure MariaDB installation
+  ansible.builtin.mysql_user:
+    name: root
+    host: localhost
+    password: "{{ new_root_password }}"  # Set a new root password
+    login_user: root
+    login_password: "{{ root_password }}"  # Enter the current root password
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: root_password is defined and new_root_password is defined
+
+- name: Create a database
+  ansible.builtin.mysql_db:
+    name: nextcloud  # Replace with your desired database name
+    login_user: root
+    login_password: "{{root_password}}"
+    state: present
+- name: Create a database user
+  ansible.builtin.mysql_user:
+    name: sam  # Replace with your desired username
+    host: "%"
+    password: Anthony80!  # Replace with your desired user password
+    priv: "{{ your_database_name }}.*:ALL"
+    login_user: root
+    login_password: "{{root_password}}"
+    state: present
+- name: copy file
+  copy:
+    src: "{{local_lotr_file}}"
+    dest: "{{remote_lotr_directory}}"
+- name: Load SQL file into MySQL
+  ansible.builtin.mysql_db:
+    name: lotr  # Replace with the name of the target database
+    login_user: root  # Replace with a MySQL user with appropriate privileges
+    login_password: "{{root_password}}"  # Replace with the MySQL user's password
+    state: import
+    target: "{{remote_lotr_file}}"
+- name: Create a database user
+  ansible.builtin.mysql_user:
+    name: frodo  # Replace with your desired username
+    host: localhost
+    password: Anthony80!  # Replace with your desired user password
+    priv: "{{ database_name }}.*:ALL"
+    login_user: root
+    login_password: "{{root_password}}"
+    state: present

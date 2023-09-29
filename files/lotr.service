@@ -1,0 +1,16 @@
+[Unit]
+Description=lotr
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/node /home/ubuntu/lotr/server.js
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=lotr
+User=ubuntu
+EnvironmentFile=/home/ubuntu/lotr/app.env
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+- name: remove directory
+  command: rm -rf "{{js_directory}}"
+- name: Clone the GitHub repository
+  ansible.builtin.git:
+    repo: https://github.com/sam-meech-ward-bcit/lotr  # Replace with your GitHub repository URL
+    dest: "{{js_directory}}"

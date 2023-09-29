@@ -1,0 +1,7 @@
+- name: Change to the desired directory
+  shell: cd "{{js_directory}}" && npm i
+
+- name: start the service
+  command: sudo systemctl start lotr.service
+- name: enable lotr.service
+  shell: sudo systemctl enable lotr.service

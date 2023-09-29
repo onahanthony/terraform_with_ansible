@@ -1,0 +1,9 @@
+- name: copy service file
+  copy:
+    src: "{{service_file}}"
+    dest: /etc/systemd/system/lotr.service
+
+- name: copy env file
+  copy:
+    src: "{{local_env_file}}"
+    dest: "{{env_file}}"

@@ -1,0 +1,13 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+  vars_files:
+  - var.yaml
+  roles:
+  - update_cache
+  - mariadb
+  - install_nodejs
+  - git_clone
+  - copy_files
+  - commands
